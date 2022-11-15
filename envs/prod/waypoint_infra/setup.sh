@@ -8,5 +8,8 @@ waypoint runner install \
   -ecs-cluster=acmecorp_waypoint_infra \
   -ecs-region=us-east-1
 
+waypoint workspace create dev
+waypoint workspace create prod
+
 # Need a terraform API token in the environment
 waypoint config source-set -type=terraform-cloud -config=token=$TFC_TOKEN
