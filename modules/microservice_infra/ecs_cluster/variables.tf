@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  description = "Name of aws fargate"
+  description = "Name of aws fargate cluster"
   type        = string
 }
 

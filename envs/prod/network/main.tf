@@ -1,9 +1,9 @@
 terraform {
   cloud {
-    organization = "hc-waypoint"
+    organization = "acmecorpinfra"
 
     workspaces {
-      name = "acmecorp-networking-dev"
+      name = "networking-prod-us-east-1"
     }
   }
 }
@@ -11,12 +11,12 @@ terraform {
 module "vpc" {
   source = "../../../modules/network/vpc"
 
-  vpc_name = "acmecorp-dev"
+  vpc_name = "acmecorp-prod"
 
   tags = {
     corp      = "acmecorp"
     owner     = "izaak"
     terraform = "true"
-    env       = "dev"
+    env       = "prod"
   }
 }

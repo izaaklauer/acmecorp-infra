@@ -1,24 +1,24 @@
 output "region" {
   value = module.vpc.region
-  description = "dev region"
+  description = "prod region"
 }
 
 output "vpc_id" {
   value       = module.vpc.vpc_id
-  description = "dev vpc id"
+  description = "prod vpc id"
 }
 
 output "public_subnets" {
   value = module.vpc.public_subnets
-  description = "dev vpc public subnets"
+  description = "prod vpc public subnets"
 }
 
 output "private_subnets" {
   value = module.vpc.private_subnets
-  description = "dev vpc private subnets"
+  description = "prod vpc private subnets"
 }
 
 output "internal_security_group_id" {
   value = module.vpc.internal_security_group_id
-  description = "dev vpc internal security group id"
+  description = "prod vpc internal security group id"
 }

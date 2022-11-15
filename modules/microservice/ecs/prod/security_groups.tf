@@ -1,7 +1,7 @@
 resource "aws_security_group" "app" {
-  name        = "${var.app_name}_dev"
+  name        = "${var.app_name}_prod_internal"
   description = "Allow all internal traffic"
-  vpc_id      = data.terraform_remote_state.networking-dev-us-east-1.outputs.vpc_id
+  vpc_id      = data.terraform_remote_state.networking-prod-us-east-1.outputs.vpc_id
 
   # Allow egress to anything
   egress {
@@ -25,19 +25,20 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_security_group" "lb" {
-  name        = "${var.app_name}_dev_lb"
+  name        = "${var.app_name}_prod_external"
   description = "Allow all external traffic and designed to be attached to the ALB"
-  vpc_id      = data.terraform_remote_state.networking-dev-us-east-1.outputs.vpc_id
+  vpc_id      = data.terraform_remote_state.networking-prod-us-east-1.outputs.vpc_id
 
   # Egress managed by external rule to avoid circular dependency
 
-  # Only accept ingress from internal sources in dev
+  # ALB terminates TLS, to take ingress on 443
   ingress {
     description      = "internal traffic"
-    from_port        = 3000
-    to_port          = 3000
+    from_port        = 80
+    to_port          = 80
     protocol         = "tcp"
-    security_groups = [ "${data.terraform_remote_state.networking-dev-us-east-1.outputs.internal_security_group_id}" ]
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   tags = local.tags
@@ -49,5 +50,5 @@ resource "aws_security_group_rule" "external_egress" {
   to_port          = 3000
   protocol         = "tcp"
   source_security_group_id = aws_security_group.app.id
-  security_group_id = aws_security_group.app.id
+  security_group_id = aws_security_group.lb.id
 }

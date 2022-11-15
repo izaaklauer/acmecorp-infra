@@ -1,0 +1,38 @@
+
+/*
+
+resource "waypoint_connect" "acmeapp1" {
+  app = "acmeapp1"
+  workspace = "dev"
+
+  data_bucket = "app"
+
+  # includes validation code
+  # evan note - wouldn't have to do separate providers per plugin type likely
+  plugins {
+    platform {
+      "aws_ecs" = {
+        # include plugin version?
+        region = "us-east-1",
+        repository = module.ecr.repository_name
+        execution_role_name = module.aws_iam_role.execution_role
+        task_role_name = module.aws_iam_role.task_role
+        vpc_id = data.terraform_remote_state.networking-dev-us-east-1.outputs.vpc_id
+        cluster_name = data.terraform_remote_state.microservices-dev-us-east-1.outputs.vpc_id
+      }
+    }
+  }
+}
+
+output "waypoint_dev" {
+  value = waypoint_connect.acmeapp1_dev.values
+  value = {
+    plugins = {
+      "aws_ecs" = {
+        region = "us-west",
+      }
+    }
+  }
+}
+
+# Waypoint consumes these from outputs or state

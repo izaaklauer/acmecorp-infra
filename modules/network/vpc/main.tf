@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.0"
+      version = "~> 4.6"
     }
   }
 }
@@ -42,7 +42,7 @@ resource "aws_security_group" "internal" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  # Allow ingress from other internal services
+  # Allow ingress from other internal microservice_infra
   ingress {
     description      = "internal traffic"
     from_port        = 0

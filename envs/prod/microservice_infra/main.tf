@@ -3,20 +3,22 @@ terraform {
     organization = "acmecorpinfra"
 
     workspaces {
-      name = "networking-dev-us-east-1"
+      name = "microservice-infra-prod-us-east-1"
     }
   }
 }
 
-module "vpc" {
-  source = "../../../modules/network/vpc"
+module "ecs_cluster" {
+  source = "../../../modules/microservice_infra/ecs_cluster"
 
-  vpc_name = "acmecorp-dev"
+  cluster_name = "acmecorp_microservices_prod"
 
   tags = {
+    workload  = "microservices"
     corp      = "acmecorp"
     owner     = "izaak"
     terraform = "true"
-    env       = "dev"
+    env       = "prod"
   }
 }
+

@@ -16,7 +16,7 @@ locals {
     corp      = "acmecorp"
     owner     = "izaak"
     terraform = "true"
-    env       = "dev"
+    env       = "prod"
     workload  = "microservice"
     app       = var.app_name
   }
