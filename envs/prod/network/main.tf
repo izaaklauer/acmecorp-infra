@@ -9,7 +9,8 @@ terraform {
 }
 
 module "vpc" {
-  source = "../../../modules/network/vpc"
+  source  = "app.terraform.io/acmecorpinfra/acmecorp-network/aws"
+  version = "0.0.1"
 
   vpc_name = "acmecorp-prod"
 
